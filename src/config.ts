@@ -1,9 +1,9 @@
 export const SITE = {
-  "title": "HiJoe",
+  "title": "JWeekly",
   "author": "joe",
-  "description": "JoesWeekly",
+  "description": "Joe's Weekly",
   "cardDesc":"🤖 为你播报一周新鲜事",
-  "keywords": "joe,hijoe,hijoe.net",
+  "keywords": "joe,hijoe,weekly,hijoe.net",
   "icon": "http://t-qiniu.linkroutes.com/uPic/logo_vZ4QQZ.png",
   "pic": "",
   "homePage": "https://wk.hijoe.net",
