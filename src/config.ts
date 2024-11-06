@@ -11,8 +11,8 @@ export const SITE = {
   "twitterId": "bestop",
   "githubId": "bestop",
   "repo": "bestop/weekly",
-  "cmtURL":"https://cmt.hijoe.net",
-  "cmtJs":"https://unpkg.com/@waline/client@v3/dist/waline.js",
-  "cmtCss":"https://unpkg.com/@waline/client@v3/dist/waline.css",
+ "cmtURL":"https://cmt.testdog.cn",
+  "cmtJs":"https://unpkg.com/@waline/client@2.15.8/dist/waline.js",
+  "cmtCss":"https://unpkg.com/@waline/client@2.15.8/dist/waline.css",
   "pv":true
 }
