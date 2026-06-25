@@ -24,14 +24,27 @@ function formatStr(str) {
   if (!!str && str.trim()) {
     str = str.replace(/[&<>'"]/g, '')
     const url = str.replace(
-      /([^\n\r\t\s]*?)((http|https):\/\/[\w\-]+\.[\w\-]+(\/[\w\-]+)*\b([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\\+#])?)/g,
-      function(a, b, c) {
-        return (b +'<' +c +'>')
+      /(?![^\[]*\])(http|https):\/\/[\w\-]+\.[\w\-]+(\/[\w\-]+)*\b([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\\+#])?/g,
+      function(match) {
+        return `<${match}>`
       }
     )
     return url
   }
   return str
+}
+
+function richTextToMd(richText) {
+  if (!richText || !Array.isArray(richText) || richText.length === 0) {
+    return ''
+  }
+  return richText.map(segment => {
+    const text = segment.plain_text || ''
+    if (segment.href) {
+      return `[${text}](${segment.href})`
+    }
+    return text
+  }).join('')
 }
 
 async function main() {
@@ -83,8 +96,8 @@ async function main() {
       const cover = page.cover?.external?.url || page.cover?.file.url
 
       const props = page.properties
-      const title = props.title?.title[0].plain_text
-      const content = props.desc?.rich_text[0]?.plain_text || ''
+      const title = richTextToMd(props.title?.title)
+      const content = richTextToMd(props.desc?.rich_text) || ''
       const img = props.img?.files[0]?.file?.url || props.img?.files[0]?.external?.url || ''
       const imgDesc = props.imgDesc?.rich_text[0]?.plain_text || ''
 
