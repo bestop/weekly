@@ -446,3 +446,25 @@ h2.heading {
 .heti .header-anchor:hover {
   text-decoration: none;
 }
+
+/* 正文里的超链接：主题色 + 下划线，与普通文本区分开（链接在深浅色主题下都可辨识） */
+.heti p a,
+.heti li a,
+.heti td a {
+  color: var(--theme-text-accent);
+  padding-block-end: 1px;
+  border-block-end: 1px solid hsla(var(--color-gray-40), 0.5);
+}
+
+.heti p a:hover,
+.heti li a:hover,
+.heti td a:hover {
+  color: var(--theme-accent);
+  border-block-end-color: currentColor;
+}
+
+/* 包含图片的链接不加下划线边框 */
+.heti p a:has(> img),
+.heti li a:has(> img) {
+  border-block-end: none;
+}
