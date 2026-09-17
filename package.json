@@ -49,6 +49,6 @@
     "@tailwindcss/typography": "^0.5.7",
     "@types/lozad": "^1.16.1",
     "dotenv": "^16.4.5",
-    "moment": "^2.30.1"
+    "moment": "^2.31.0"
   }
 }
