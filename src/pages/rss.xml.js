@@ -1,5 +1,7 @@
 import rss from '@astrojs/rss';
+import dayjs from 'dayjs';
 import { SITE } from '@/config';
+import { parseTitle } from '@/util';
 
 let allPosts = import.meta.glob('./posts/*.md', { eager: true });
 let posts = Object.values(allPosts);
@@ -20,15 +22,11 @@ export const get = () =>
     site: SITE.homePage,
     customData: `<image><url>${SITE.icon}</url></image>`,
     items: posts.map((item) => {
-      const url = item.url;
-      const oldTitle = url.split('/posts/')[1];
-      const title =
-        '第' + oldTitle.split('-')[0] + '期 - ' + oldTitle.split('-')[1];
       return {
-        link: url,
-        title,
+        link: item.url,
+        title: parseTitle(item.url),
         description: item.compiledContent(),
-        pubDate: item.frontmatter.date,
+        pubDate: dayjs(item.frontmatter.date).toDate(),
       };
     }),
   });

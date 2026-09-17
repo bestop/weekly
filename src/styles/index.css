@@ -419,3 +419,30 @@ h2.heading {
 .card-desc{
   color: var(--theme-text-light-gray);
 }
+
+/* 文章标题锚点链接（rehype-autolink-headings 生成，hover 标题时显示） */
+.heti h2 .header-anchor,
+.heti h3 .header-anchor,
+.heti h4 .header-anchor,
+.heti h5 .header-anchor,
+.heti h6 .header-anchor {
+  opacity: 0;
+  margin-left: 0.4em;
+  font-weight: 400;
+  color: var(--theme-text-accent);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.heti h2:hover .header-anchor,
+.heti h3:hover .header-anchor,
+.heti h4:hover .header-anchor,
+.heti h5:hover .header-anchor,
+.heti h6:hover .header-anchor,
+.heti .header-anchor:focus-visible {
+  opacity: 1;
+}
+
+.heti .header-anchor:hover {
+  text-decoration: none;
+}

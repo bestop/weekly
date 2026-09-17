@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import fs from 'fs';
 import { defineConfig } from 'astro/config';
 import { parse } from 'node-html-parser';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { SITE } from './src/config';
 
 function fetchMdImg(file){
@@ -59,5 +61,18 @@ export default defineConfig({
       defaultLayoutPlugin,
     ],
     extendDefaultPlugins: true,
+    rehypePlugins: [
+      // 给标题生成稳定的 id（TOC 跳转依赖它）
+      rehypeSlug,
+      // 给每个标题追加可点击的 # 锚点链接，hover 时显示
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'append',
+          content: { type: 'text', value: '#' },
+          properties: { className: ['header-anchor'], 'aria-hidden': 'true' },
+        },
+      ],
+    ],
   },
 });

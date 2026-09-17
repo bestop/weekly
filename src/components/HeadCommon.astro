@@ -12,5 +12,5 @@ const {icon} =SITE;
 <link rel="shortcut icon" href={icon} />
 <link rel="icon" type="image/svg+xml" href={icon} />
 <link rel="alternate icon" type="image/x-icon" href={icon}/>
-<link rel="sitemap" href="/sitemap.xml" />
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+<!-- Waline 样式版本需与评论 JS（SITE.cmtJs）保持一致，否则样式会错乱 -->
+<link rel="stylesheet" href={SITE.cmtCss} />

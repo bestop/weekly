@@ -19,11 +19,13 @@ import { SITE } from '@/config';
     });
     observer.observe();
 
-    // 链接外跳
+    // 链接外跳（仅针对 http(s) 绝对地址，避免误伤 TOC #锚点 和站内相对链接）
     const links = doc.links;
-    for (let i = 0; i < +links.length; i++) {
-      if (links[i].hostname != window.location.hostname ) {
+    for (let i = 0; i < links.length; i++) {
+      const href = links[i].getAttribute('href') || '';
+      if (/^https?:\/\//.test(href) && links[i].hostname !== window.location.hostname) {
         links[i].target = '_blank';
+        links[i].rel = 'noopener noreferrer';
       }
     }
 
@@ -101,4 +103,3 @@ import { SITE } from '@/config';
 </script>
 
 {SITE.pv ?<script async defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>:''}
-<script async src="https://tongji.linkroutes.com/script.js" data-website-id="032e98e9-7e16-4dc9-af0c-48b86a9ca6ae"></script>
