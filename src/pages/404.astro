@@ -1,0 +1,44 @@
+---
+import HeadCommon from '../components/HeadCommon.astro';
+import HeadSEO from '../components/HeadSEO.astro';
+import Header from '../components/Header/Header.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { SITE } from '@/config';
+---
+
+<html lang="zh-CN">
+  <head>
+    <HeadCommon />
+    <HeadSEO pageURL={`${SITE.homePage}/404`} content={{}} />
+    <title>{SITE.title} · 404</title>
+    <style>
+      .wrap-404 {
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+      .code-404 {
+        font-size: 5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--theme-text-accent, #a67c52);
+      }
+      .tip-404 a {
+        color: var(--theme-text-accent, #a67c52);
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main class="wrap-404">
+      <p class="code-404">404</p>
+      <p>页面不存在或已被移动</p>
+      <p class="tip-404">去<a href="/">首页</a>看看最近的周刊，或用右上角搜索找找感兴趣的内容</p>
+    </main>
+    <SiteFooter />
+  </body>
+</html>

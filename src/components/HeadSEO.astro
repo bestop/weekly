@@ -4,26 +4,36 @@ export interface Props {
   content: any;
   pageURL: URL | string;
 }
-const { icon,keywords,author,twitterId,homePage } =SITE;
+const { icon, keywords, author, twitterId, homePage } = SITE;
 const { content = {}, pageURL } = Astro.props;
-const pageTitle = content.title ? `${SITE.title}${content.title}` : SITE.title;
-const imageSrc = content.twitterImg || SITE.pic;
-const description = content.description ? content.description : SITE.description;
+
+// 标题统一用 " · " 分隔（与 <title> 保持一致）
+const pageTitle = content.title ? `${SITE.title} · ${content.title}` : SITE.title;
+// 分享图优先级：文章封面 > 显式 twitterImg > 站点默认图；http 强制升级 https（og:image 用 http 会被社交平台拒绝）
+const toHttps = (u = '') => u.replace(/^http:\/\//, 'https://');
+const imageSrc = toHttps(content.twitterImg || content.image || SITE.pic || icon);
+const description = content.description || SITE.description;
+// 文章页是 article，首页等其他页面是 website
+const ogType = content.title ? 'article' : 'website';
 ---
+
+<meta name="keywords" content={keywords} />
+<meta name="author" content={author} />
+<meta name="description" content={description} />
+<link rel="canonical" href={pageURL} />
+
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:image" content={imageSrc} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={pageURL} />
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:locale" content="zh_CN" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content={imageSrc} />
-<meta name="twitter:site" content={homePage} />
-<meta property="twitter:url" content={pageURL} />
+<meta name="twitter:site" content={`@${twitterId}`} />
 <meta name="twitter:creator" content={`@${twitterId}`} />
-<meta property="twitter:description" content={description} />
-
-<meta name="keywords" content={keywords}/>
-<meta name="author" content={author} />
-<meta name="description" content={description}>
-<meta property="og:type" content="website" />
-<meta property="og:title" content={pageTitle} />
-<meta property="og:image" content={icon} />
-<meta property="og:description" content={description} />
-<meta property="og:url" content={pageURL} />
-<meta property="og:site_name" content={pageTitle} />
+<meta property="twitter:url" content={pageURL} />
+<meta name="twitter:description" content={description} />
+---

@@ -2,15 +2,15 @@
 import '../styles/theme.css';
 import '../styles/index.css';
 import { SITE } from '@/config';
-const {icon} =SITE;
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link rel="shortcut icon" href={icon} />
-<link rel="icon" type="image/svg+xml" href={icon} />
-<link rel="alternate icon" type="image/x-icon" href={icon}/>
+<!-- 站点图标本地化：不依赖第三方 CDN，离线可用且无混合内容风险 -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate icon" type="image/png" href={SITE.icon} />
 <!-- Waline 样式版本需与评论 JS（SITE.cmtJs）保持一致，否则样式会错乱 -->
 <link rel="stylesheet" href={SITE.cmtCss} />
+---

@@ -3,7 +3,7 @@ import HeadCommon from '../components/HeadCommon.astro';
 import HeadSEO from '../components/HeadSEO.astro';
 import Card from '../components/Card.astro';
 import Header from '../components/Header/Header.astro';
-import Footer from '../components/Footer.astro'
+import SiteFooter from '../components/SiteFooter.astro'
 import { SITE } from '@/config';
 import {sortPosts} from '@/util'
 
@@ -28,7 +28,7 @@ const allPosts = sortPosts(posts);
       </div>
     </div>
 
-    <Footer/>
+    <SiteFooter/>
     <!-- TODO: 如需站点统计，请替换为你自己的 umami/plausible 脚本（原脚本指向模板作者的第三方统计） -->
   </body>
 </html>

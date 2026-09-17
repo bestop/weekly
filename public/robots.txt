@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wk.hijoe.net/sitemap.xml

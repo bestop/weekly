@@ -12,7 +12,9 @@ function buildToc(headings) {
     if (heading.depth === 2) {
       toc.push(heading);
     } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+      // 防御：h3 先于 h2（或 h4 先于 h3）出现时，父级不存在，挂到最近一个 h2 上，避免构建崩溃
+      const parent = parentHeadings.get(heading.depth - 1) || toc[toc.length - 1];
+      if (parent) parent.subheadings.push(heading);
     }
   });
   return toc;

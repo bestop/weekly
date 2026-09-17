@@ -155,6 +155,8 @@ function autoLinkEntryTitles() {
 
 // https://astro.build/config
 export default defineConfig({
+  // 站点根地址：sitemap/canonical/绝对链接依赖它
+  site: SITE.homePage,
   integrations: [react(), tailwind()],
   markdown: {
     remarkPlugins: [

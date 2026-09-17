@@ -4,20 +4,23 @@ import { SITE } from '@/config';
 ---
 <ThemeSwitch />
 
-<script type="text/javascript" src="https://gw.alipayobjects.com/os/k/3j/lozad.min.js"></script>
-
-<!-- This is intentionally inlined to avoid FOUC 2-->
-<script is:inline define:vars={{ SITE }}>
-  const doc = document
-  doc.addEventListener('DOMContentLoaded', function () {
-
-    // 图片懒加载
+<!-- lozad 改为 npm 依赖本地打包，移除对支付宝 CDN 的依赖 -->
+<script>
+  import lozad from 'lozad';
+  window.addEventListener('DOMContentLoaded', () => {
     const observer = lozad('.lozad', {
       loaded: function (el) {
         el.alt = el.getAttribute('data-alt');
       },
     });
     observer.observe();
+  });
+</script>
+
+<!-- This is intentionally inlined to avoid FOUC 2-->
+<script is:inline define:vars={{ SITE }}>
+  const doc = document
+  doc.addEventListener('DOMContentLoaded', function () {
 
     // 链接外跳（仅针对 http(s) 绝对地址，避免误伤 TOC #锚点 和站内相对链接）
     const links = doc.links;
@@ -36,7 +39,9 @@ import { SITE } from '@/config';
         entries.forEach(entry => {
           const section = entry.target;
           const sectionId = section.id;
+          // 原选择器缺少 "h"（无效 CSS），导致每次滚动都抛 SyntaxError、高亮失效
           const sectionLink = doc.querySelector(`.toc-list>li>a[href="#${sectionId}"]`);
+          if (!sectionLink) return;
 
           let inScreen = entry.intersectionRatio > 0
           //  也可以按照entry.boundingClientRect判断

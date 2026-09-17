@@ -6,11 +6,11 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/thinkerchan/weekly.git"
+    "url": "https://github.com/bestop/weekly.git"
   },
   "author": {
-    "name": "chanthinker",
-    "email": "chanthinker@foxmail.com"
+    "name": "joe",
+    "url": "https://hijoe.net"
   },
   "license": "MIT",
   "scripts": {

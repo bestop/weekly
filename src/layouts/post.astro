@@ -2,7 +2,7 @@
 import '../styles/heti.min.css';
 import HeadCommon from '../components/HeadCommon.astro';
 import HeadSEO from '../components/HeadSEO.astro';
-import Footer from '../components/Footer.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import AstroLogo from '../components/Header/AstroLogo.astro';
 import LeftSidebar from '../components/LeftSidebar.astro';
 import Search from '../components/Header/Search.astro';
@@ -255,6 +255,6 @@ if (currentIndex > -1) {
         { toc?<Toc headings={headings} />:''}
       </div>
     </main>
-    <Footer />
+    <SiteFooter />
   </body>
 </html>
