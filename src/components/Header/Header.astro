@@ -6,7 +6,7 @@ import HeaderRight from './HeaderRight.astro';
 
 <header>
   <nav
-    class="nav-wrapper md:-ml-3 xl:max-w-7xl md:w-full lg:max-w-5xl md:max-w-2xl w-96 ml-4"
+    class="nav-wrapper md:-ml-3 xl:max-w-7xl md:w-full lg:max-w-5xl md:max-w-2xl w-full px-4 md:px-0"
     title={SITE.title}
   >
     <div class="logo flex md:ml-0 ml-3">
@@ -25,12 +25,18 @@ import HeaderRight from './HeaderRight.astro';
   header {
     height: var(--theme-navbar-height);
     width: 100%;
+    /* 毛玻璃：半透明背景 + 背景模糊，滚动时内容从导航下方穿过 */
+    position: sticky;
+    top: 0;
+    z-index: 40;
     background-color: var(--theme-navbar-bg);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--theme-divider);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    top: 0;
   }
 
   .logo {
@@ -77,6 +83,11 @@ import HeaderRight from './HeaderRight.astro';
   @media (max-width: 50em) {
     .nav-wrapper {
       margin: 5px 0 5px;
+    }
+
+    /* 小屏收紧 logo 字号，避免右侧导航链接被挤到第二行 */
+    .logo {
+      font-size: 1.6rem;
     }
   }
 

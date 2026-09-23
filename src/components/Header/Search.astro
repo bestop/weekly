@@ -133,6 +133,17 @@ import SearchIcon from './SearchIcon.astro';
     left: -40px;
     top: -23px;
     outline: none;
+    /* 覆盖 pagefind 默认 UI 给按钮加的白底/阴影，跟随主题配色 */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--theme-text);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .search-icon:hover {
+    color: var(--theme-text-accent);
+    transform: scale(1.1);
   }
 
   .content-title .search-icon {

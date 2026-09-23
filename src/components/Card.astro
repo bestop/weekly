@@ -8,28 +8,37 @@ export interface Props {
 const { post } = Astro.props;
 const title = parseTitle(post.url);
 const { pic, desc, date } = post.frontmatter;
+
+// 封面图：t-qiniu 图床走七牛压缩参数，其余原样；无图时不渲染 img，露出容器的品牌渐变占位
+const cover = pic ? (pic.indexOf('t-qiniu') > -1 ? `${pic}?imageView2/2/w/640` : pic) : '';
 ---
 
 <a
   href={post.url}
-  class="art-card pb-3 md:mt-5 mt-4 md:mr-5 flex flex-col justify-center rounded-b-md shadow-md overflow-hidden mx-auto md:w-80 w-96"
+  class="art-card pb-3 md:mt-5 mt-4 md:mr-5 flex flex-col justify-center rounded-b-md shadow-md overflow-hidden mx-auto w-full md:w-80"
 >
-  <img
-    data-placeholder-background="linear-gradient(to bottom, #ece9e6, #f1f1f1)"
-    data-src={`${pic? (pic.indexOf('t-qiniu') > -1 ?  pic+'?imageView2/2/w/640' : pic ) :'https://dummyimage.com/600x400/fff/000000.jpg&text=Hello'}`}
-    data-alt={title}
-    alt={title}
-    class="lozad block md:w-80 md:h-48 w-96 h-52 rounded-t-md"
-    style="object-fit: cover;"
-  />
+  <div class="card-cover">
+    {
+      cover && (
+        <img
+          data-src={cover}
+          data-alt={title}
+          alt=""
+          class="lozad"
+          onload="this.classList.add('is-loaded')"
+          onerror="this.style.display='none'"
+        />
+      )
+    }
+  </div>
   <div
     class="w-full flex justify-between items-center leading-tight pt-4 pl-3 pr-3"
   >
-    <div class="text-800 seLine1">{title}</div>
-    <div class="text-grey-darker text-sm text-600">{date}</div>
+    <div class="text-800 seLine1 card-title flex-1 min-w-0">{title}</div>
+    <div class="text-grey-darker text-sm text-600 shrink-0 pl-2">{date}</div>
   </div>
   <p
-    class="card-desc text-sm md:w-78 w-94 overflow-hidden pt-2.5 line-clamp-2 px-3 w-full h-12"
+    class="card-desc text-sm overflow-hidden pt-2.5 line-clamp-2 px-3 w-full h-12"
   >
     {desc}
   </p>

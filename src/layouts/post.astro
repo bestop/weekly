@@ -22,7 +22,7 @@ const currentPage = pageUrl.pathname;
 
 let title = parseTitle(currentPage);
 
-const { date, pic, desc, url, twitterImg,toc } = Astro.props.frontmatter;
+const { date, pic, desc, twitterImg, toc } = Astro.props.frontmatter;
 const content = {
   title,
   image: pic,
@@ -51,6 +51,14 @@ if (currentIndex > -1) {
     nextUrl = allPosts[currentIndex - 1].url;
   }
 }
+
+// GitHub 编辑链接：frontmatter 没有 url 字段，从匹配到的文章对象取真实文件路径（修复 src/pagesundefined.md）
+const currentPost = currentIndex > -1 ? allPosts[currentIndex] : null;
+const editUrl = currentPost
+  ? `https://github.com/${SITE.repo}/tree/master/src/pages${currentPost.url}.md`
+  : '';
+const prevTitle = prevUrl ? parseTitle(prevUrl) : '';
+const nextTitle = nextUrl ? parseTitle(nextUrl) : '';
 ---
 
 <html lang="zh-CN">
@@ -224,18 +232,34 @@ if (currentIndex > -1) {
             class="flex justify-between md:flex-row flex-col mt-2 post-footer"
           >
             <div class="text-800 flex-1">
-              发布日期: {SITE.repo?
-              <a href={`https://github.com/${SITE.repo}/tree/master/src/pages${url}.md`} target="_blank" title="Edit">{date}</a> : date
-              }
+              发布日期:
+              {editUrl ? (
+                <a href={editUrl} target="_blank" title="在 GitHub 上编辑此文">{date}</a>
+                ) : (
+                date
+              )}
             </div>
             <div class="md:mt-0 mt-4 flex-1 text-right">
-              {prevUrl ? <a href={prevUrl}>上一篇 |</a> : null}
-              {nextUrl ? <a href={nextUrl}>下一篇 |</a> : null}
-              <a href="/">去首页 </a>
-              {SITE.twitterId && ( <a href={`https://twitter.com/${SITE.twitterId}`} target="_blank" title="Follow">| Twitter</a>)}
+              {SITE.twitterId && ( <a href={`https://twitter.com/${SITE.twitterId}`} target="_blank" title="Follow">Twitter</a>)}
               {SITE.repo && (<a href={`https://github.com/${SITE.repo}`} title="Star" target="_blank" class="lg:inline-block hidden">| Github</a>)}
               <a href="/rss.xml" title="Subscribe" target="_blank" class="xl:inline-block hidden">| RSS</a>
             </div>
+          </div>
+          <div class="post-nav">
+            {prevUrl ? (
+              <a class="post-nav-card prev" href={prevUrl}>
+                <span class="pn-label">← 上一篇</span>
+                <span class="pn-title">{prevTitle}</span>
+              </a>
+            ) : (
+              <span class="post-nav-card empty" aria-hidden="true"></span>
+            )}
+            {nextUrl ? (
+              <a class="post-nav-card next" href={nextUrl}>
+                <span class="pn-label">下一篇 →</span>
+                <span class="pn-title">{nextTitle}</span>
+              </a>
+            ) : null}
           </div>
         </div>
 

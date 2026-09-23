@@ -402,8 +402,23 @@ h2.heading {
 }
 
 .g-toc li a{
-  color: var(--theme-text-light);
+  display: block;
+  padding: 0.15rem 0 0.15rem 0.6rem;
+  border-left: 2px solid transparent;
+  color: var(--theme-text-light-gray);
   text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.g-toc li a:hover{
+  color: var(--theme-text-accent);
+  border-left-color: var(--theme-divider);
+}
+
+.g-toc li a.on{
+  color: var(--theme-text-accent);
+  border-left-color: var(--theme-text-accent);
+  font-weight: 600;
 }
 
 #Jslot img{
@@ -412,12 +427,156 @@ h2.heading {
 
 .g-toc h5{
   margin-bottom: 1rem;
+  font-size: 0.8rem;
   font-weight: 700;
   line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--theme-text-light-gray);
 }
 
 .card-desc{
   color: var(--theme-text-light-gray);
+}
+
+/* ============ UI 优化（全局） ============ */
+
+/* 防止第三方内容撑破页面产生横向滚动（clip 不会创建滚动容器，不影响 sticky） */
+html {
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* 全局细滚动条，亮暗主题自适应 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* 首页卡片：hover 上浮 + 阴影加深 + 标题变色 */
+.art-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.art-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.18);
+}
+[data-theme='dark'] .art-card {
+  outline: 1px solid var(--theme-divider);
+  outline-offset: -1px;
+}
+.art-card:hover .card-title {
+  color: var(--theme-text-accent);
+}
+
+/* 卡片封面：渐变占位 + 品牌水印，图片加载中/失败时不露破碎图标 */
+.card-cover {
+  position: relative;
+  width: 100%;
+  height: 11rem;
+  overflow: hidden;
+  background-image: var(--card-cover-gradient);
+}
+@media (min-width: 768px) {
+  .card-cover {
+    height: 12rem;
+  }
+}
+.card-cover::after {
+  content: 'JWeekly';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--theme-text-accent);
+  opacity: 0.32;
+  pointer-events: none;
+}
+.card-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+.card-cover img.is-loaded {
+  opacity: 1;
+}
+
+/* 文章页上一篇/下一篇卡片导航 */
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.post-nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--theme-divider);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.post-nav-card:hover {
+  border-color: var(--theme-text-accent);
+  transform: translateY(-2px);
+}
+.post-nav-card .pn-label {
+  font-size: 0.8rem;
+  color: var(--theme-text-light-gray);
+}
+.post-nav-card .pn-title {
+  font-weight: 600;
+  color: var(--theme-text);
+  font-size: 0.95rem;
+}
+.post-nav-card:hover .pn-title {
+  color: var(--theme-text-accent);
+}
+.post-nav-card.next {
+  text-align: right;
+  align-items: flex-end;
+}
+.post-nav-card.empty {
+  visibility: hidden;
+}
+@media (max-width: 640px) {
+  .post-nav {
+    grid-template-columns: 1fr;
+  }
+  .post-nav-card.next {
+    text-align: left;
+    align-items: flex-start;
+  }
 }
 
 /* 文章标题锚点链接（rehype-autolink-headings 生成，hover 标题时显示） */

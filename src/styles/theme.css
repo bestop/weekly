@@ -57,10 +57,18 @@
   --theme-code-inline-text: var(--theme-text);
   --theme-code-bg: hsla(217, 19%, 27%, 1);
   --theme-code-text: hsla(var(--color-gray-95), 1);
-  --theme-navbar-bg: hsla(var(--color-base-white), 100%, 1);
+  --theme-navbar-bg: hsla(var(--color-base-white), 100%, 1, 0.82);
   --theme-navbar-height: 6rem;
   --theme-selection-color: #a67c52;
   --theme-selection-bg: #E2D7CF;
+  /* 全局字体栈：原先只在 heti.min.css（仅文章页加载）中定义，首页/404 会回退到浏览器默认字体 */
+  --text-font: -apple-system, system-ui, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial;
+  --code-text-font: Monaco, 'SF Mono', Consolas, 'Courier New', monospace;
+  /* 细滚动条（亮色） */
+  --scrollbar-thumb: hsla(var(--color-gray-30), 1);
+  --scrollbar-thumb-hover: hsla(var(--color-gray-40), 1);
+  /* 首页卡片封面加载中/加载失败时的品牌渐变占位 */
+  --card-cover-gradient: linear-gradient(135deg, #f7f2ea 0%, #ece4d7 55%, #dccfbe 100%);
 }
 
 [data-theme='dark'] {
@@ -81,7 +89,10 @@
   --waline-color: var(--theme-text);
   --waline-bg-color: var(--theme-bg);
   --waline-bg-color-hover:var(--theme-bg);
-  --theme-navbar-bg:var(--theme-bg);
+  --theme-navbar-bg: hsla(217, 19%, 15%, 0.82);
+  --scrollbar-thumb: #3a4149;
+  --scrollbar-thumb-hover: #4a525b;
+  --card-cover-gradient: linear-gradient(135deg, #2c3339 0%, #262d33 55%, #1f252a 100%);
 }
 
 body {
